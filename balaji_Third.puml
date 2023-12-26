@@ -42,33 +42,4 @@ current *-- account
 savings *-- account
 
 
-actor bankCustomer
-
-bankCustomer->BankInterface:Request Acount Opening
-
-BankInterface --> bankCustomer:Display account types(savings /current/demat)
-bankCustomer -->BankInterface:choose account
-loop until true
-    alt savings
-        BankInterface --> User : Asks User to Deposit/withdraw Money/getbalance
-        User --> BankInterface : Deposits/withdraw/getbalance
-    else current
-        BankInterface --> User : Asks User to Deposit/withdraw Money/getbalance
-        User --> BankInterface : Deposits/withdraw/getbalance
-    else demat
-                BankInterface --> User : Asks User to Deposit/withdraw Money/getbalance
-        User --> BankInterface : Deposits/withdraw/getbalance
-    else
-        BankInterface-->bankCustomer:invalid option
-
-    end
-end loop
-
-
-
-
-
-
-
-
 @enduml
