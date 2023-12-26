@@ -1,0 +1,74 @@
+@startuml
+
+package Question_1 {
+
+interface account{
+    
+    void deposit()
+    void withdraw()
+}
+class current {
+    - double balance
+    void getbalance()
+    deposit()
+    withdraw()
+}
+
+class demat{
+    - balance 
+    void getbalance()
+    void liquidate()
+    void invest()
+
+}
+
+class fd{
+    int time 
+    - double amount
+    void setamount()
+    int intrest()
+    long getamount()
+}
+
+class savings{
+    - double balance
+    void getbalance()
+    deposit()
+    withdraw()
+}
+}
+
+current *-- account
+savings *-- account
+
+
+actor bankCustomer
+
+bankCustomer->BankInterface:Request Acount Opening
+
+BankInterface --> bankCustomer:Display account types(savings /current/demat)
+bankCustomer -->BankInterface:choose account
+loop until true
+    alt savings
+        BankInterface --> User : Asks User to Deposit/withdraw Money/getbalance
+        User --> BankInterface : Deposits/withdraw/getbalance
+    else current
+        BankInterface --> User : Asks User to Deposit/withdraw Money/getbalance
+        User --> BankInterface : Deposits/withdraw/getbalance
+    else demat
+                BankInterface --> User : Asks User to Deposit/withdraw Money/getbalance
+        User --> BankInterface : Deposits/withdraw/getbalance
+    else
+        BankInterface-->bankCustomer:invalid option
+
+    end
+end loop
+
+
+
+
+
+
+
+
+@enduml

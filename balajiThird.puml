@@ -1,0 +1,33 @@
+@startuml
+
+actor bankCustomer
+
+bankCustomer->BankInterface:Request Acount Opening
+activate bankCustomer
+activate BankInterface
+BankInterface --> bankCustomer:Display account types(savings /current/demat/FD)
+bankCustomer --> BankInterface:choose account
+
+loop until true
+    alt savings
+        BankInterface --> bankCustomer : Asks User to Deposit/withdraw Money/getbalance /open FD
+        bankCustomer --> BankInterface : Give wheither to Deposits/withdraw/getbalance
+        BankInterface --> Bank : Forward the command and execute it
+        Bank --> bankCustomer :executed and show current balance in savings account 
+    else current
+        BankInterface --> bankCustomer : Asks User to Deposit/withdraw Money/getbalance /open FD
+        bankCustomer --> BankInterface : Give wheither to Deposits/withdraw/getbalance
+        BankInterface -->Bank : Forward the command and execute it
+        Bank --> bankCustomer :executed and show current balance in current account 
+    else demat
+        BankInterface --> bankCustomer : Asks User to Invest / Liquidate / getbalance
+        bankCustomer --> BankInterface : Deposits/withdraw/getbalance
+        BankInterface -->Bank : Forward the command and execute it
+        Bank --> bankCustomer :executed and show current balance in demat account
+    else
+        BankInterface-->bankCustomer:invalid option
+        deactivate BankInterface
+        deactivate bankCustomer 
+    end
+end loop
+@enduml

@@ -1,0 +1,52 @@
+@startuml balaji_first
+
+actor Customer #Green
+loop until Option>0 and Option<4
+
+    Customer -> HotelMenu : Request Menu
+    activate Customer
+    activate HotelMenu
+    database Database #Orange
+    HotelMenu -> Database : Search menu 
+    activate Database
+    Database --> Customer : Show menu
+    Customer -> HotelMenu : Enter Option
+    HotelMenu -> Database : Checks Option
+    alt Option 0
+        Database --> Customer : Displays exit message
+    else Option 1
+        Database --> Customer : Displays Veg
+        Customer -> HotelMenu : Enter Option 
+        HotelMenu -> Database : Checks Option
+        alt Option 1 or Option 2 or Option 3
+            Database --> Customer : Confirms the dish and order is placed
+        else other options
+            Database --> Customer : Invalid Option
+        end
+    else Option 2
+        Database --> Customer : Displays Non-Veg
+        Customer -> HotelMenu : Enter Option 
+        HotelMenu -> Database : Checks Option
+        alt Option 1 or Option 2 or Option 3
+            Database --> Customer : Confirms the dish and order is placed
+        else other options
+            Database --> Customer : Invalid Option
+        end
+    else Option 3
+        Database --> Customer : Displays beverages
+        Customer -> HotelMenu : Enter Option 
+        HotelMenu -> Database : Checks Option
+        alt Option 1 or Option 2 or Option 3
+            Database --> Customer : Confirms the cool drink and order is placed
+        else other options
+            Database --> Customer : Invalid Option
+        end
+    else
+        Database -> Customer : Invalid Option 
+        deactivate Customer
+        deactivate HotelMenu
+        deactivate Database
+    end
+
+end loop 
+@enduml
